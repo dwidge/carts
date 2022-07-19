@@ -8,12 +8,18 @@ const Carts = ({ stslots, stcarts }) => {
 	const [allslots] = stslots
 	const [carts, setcarts] = stcarts
 	const [idEdit, setidEdit] = useState()
+	const [confirm, setconfirm] = useState(false)
 
 	const setcart = cart => setcarts(replaceItemById(carts, cart))
 	const delcart = id =>
 		setcarts(dropItemById(carts, id))
 	const addcart = cart => setcarts(carts.concat([cart]))
 	const newcart = () => ({ id: uuid(), name: 'cart', slots: [] })
+
+	const onClear = () => {
+		confirm && setcarts([])
+		setconfirm(!confirm)
+	}
 
 	return (
 		<div>
@@ -25,6 +31,7 @@ const Carts = ({ stslots, stcarts }) => {
 				{carts.map(cart => idEdit === cart.id ? (<CartEdit key={cart.id} allslots={allslots} cart={cart} onSave={cart => { setcart(cart); setidEdit() }} onCancel={setidEdit} />) : (<CartRow key={cart.id} allslots={allslots} cart={cart} onEdit={setidEdit} onDel={delcart} />))}
 			</cart-table>
 			<button onClick={() => addcart(newcart())} data-testid="buttonAdd">Add</button>
+			<button onClick={onClear} data-testid="buttonClear">{confirm ? 'Confirm' : 'Clear'}</button>
 		</div>
 	)
 }

@@ -8,6 +8,8 @@ const Slots = ({ stslots }) => {
 	const [day, setday] = useState('')
 	const [beg, setbeg] = useState('')
 	const [end, setend] = useState('')
+	const [confirm, setconfirm] = useState(false)
+
 	const onAdd = () => {
 		const slot = { id: uuid(), day, beg, end }
 
@@ -16,6 +18,10 @@ const Slots = ({ stslots }) => {
 		setbeg('')
 		setend('')
 	}
+	const onClear = () => {
+		confirm && setslots([])
+		setconfirm(!confirm)
+	}
 
 	return (
 		<div>
@@ -23,6 +29,7 @@ const Slots = ({ stslots }) => {
 			<input value={beg} onChange={onChange(setbeg)} data-testid="inputBeg"></input>
 			<input value={end} onChange={onChange(setend)} data-testid="inputEnd"></input>
 			<button onClick={onAdd} data-testid="buttonAdd">Add</button>
+			<button onClick={onClear} data-testid="buttonClear">{confirm ? 'Confirm' : 'Clear'}</button>
 
 			<div data-testid="slotList">
 				<slot-header>

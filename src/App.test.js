@@ -8,6 +8,7 @@ import * as Random from '@dwidge/lib/random'
 import * as J from '@dwidge/lib-react/jest'
 import { getTag, getTags, getText } from '@dwidge/lib-react/jest'
 
+const text = J.tools(userEvent, screen, jest).text
 const type = J.type(userEvent, screen)
 const click = J.click(userEvent, screen)
 const serialSpy = J.serialSpy(jest)
@@ -26,6 +27,9 @@ afterEach(() => {
 })
 
 describe('Slots', () => {
+	const slot1 = { id: 1, day: 1, beg: 6, end: 8 }
+	const slot2 = { id: 2, day: 2, beg: 14, end: 17 }
+
 	it('enters day,beg,end into list', async () => {
 		const App = () => (<Slots stslots={useState([])}/>)
 		render(<App/>)
@@ -37,18 +41,36 @@ describe('Slots', () => {
 	})
 
 	it('enters another day,beg,end into list', async () => {
-		const App = () => (<Slots stslots={useState([{ id: 4, day: 1, beg: 6, end: 8 }])}/>)
+		const App = () => (<Slots stslots={useState([slot1])}/>)
 		render(<App/>)
 		expect(getSlotList()).toEqual([['1', '6', '8']])
+		Random.uuid()
 		await type('inputDay', '2')
 		await type('inputBeg', '14')
 		await type('inputEnd', '17')
 		click('buttonAdd')
 		expect(getSlotList()).toEqual([['1', '6', '8'], ['2', '14', '17']])
 	})
+
+	it('confirms & clears list', async () => {
+		const App = () => (<Slots stslots={useState([slot1, slot2])}/>)
+		render(<App/>)
+		expect(getSlotList()).toEqual([['1', '6', '8'], ['2', '14', '17']])
+		expect(text('buttonClear')).toEqual('Clear')
+		click('buttonClear')
+		expect(text('buttonClear')).toEqual('Confirm')
+		expect(getSlotList()).toEqual([['1', '6', '8'], ['2', '14', '17']])
+		click('buttonClear')
+		expect(text('buttonClear')).toEqual('Clear')
+		expect(getSlotList()).toEqual([])
+	})
 })
 
 describe('Carts', () => {
+	const slot1 = { id: 1, day: 1, beg: 6, end: 8 }
+	const cart1 = { id: 1, name: 'cart1', slots: [1] }
+	const cart2 = { id: 2, name: 'cart2', slots: [] }
+
 	it('enters cart into list', async () => {
 		const App = () => (<Carts stslots={useState([])} stcarts={useState([])} />)
 		render(<App/>)
@@ -60,13 +82,26 @@ describe('Carts', () => {
 	})
 
 	it('enables a slot', async () => {
-		const App = () => (<Carts stslots={useState([{ id: 4, day: 1, beg: 6, end: 8 }])} stcarts={useState([])} />)
+		const App = () => (<Carts stslots={useState([slot1])} stcarts={useState([])} />)
 		render(<App/>)
 		click('buttonAdd')
 		click('buttonEdit1')
 		await type('inputName', '1')
-		click('inputSlots4')
+		click('inputSlots1')
 		click('buttonSave')
-		expect(getCartList()).toEqual([['cart1', ['4']]])
+		expect(getCartList()).toEqual([['cart1', ['1']]])
+	})
+
+	it('confirms & clears list', async () => {
+		const App = () => (<Carts stslots={useState([slot1])} stcarts={useState([cart1, cart2])} />)
+		render(<App/>)
+		expect(getCartList()).toEqual([['cart1', ['1']], ['cart2', []]])
+		expect(text('buttonClear')).toEqual('Clear')
+		click('buttonClear')
+		expect(text('buttonClear')).toEqual('Confirm')
+		expect(getCartList()).toEqual([['cart1', ['1']], ['cart2', []]])
+		click('buttonClear')
+		expect(text('buttonClear')).toEqual('Clear')
+		expect(getCartList()).toEqual([])
 	})
 })
