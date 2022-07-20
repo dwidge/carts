@@ -10,11 +10,12 @@ import { getTag, getTags, getText } from '@dwidge/lib-react/jest'
 
 const text = J.tools(userEvent, screen, jest).text
 const type = J.type(userEvent, screen)
+const input = J.input(userEvent, screen)
 const click = J.click(userEvent, screen)
 const serialSpy = J.serialSpy(jest)
 
 const getSlotList = () =>
-	getTags(screen.getByTestId('slotList'))('slot-item').map(slotItem => ['slot-day', 'slot-beg', 'slot-end'].map(getTag(slotItem)).map(getText))
+	getTags(screen.getByTestId('slotTable'))('slot-item').map(slotItem => ['slot-day', 'slot-beg', 'slot-end'].map(getTag(slotItem)).map(getText))
 
 const getCartList = () =>
 	getTags(screen.getByTestId('cartTable'))('cart-item').map(item => [getText(getTag(item)('cart-name')), getTags(getTag(item)('cart-slots'))('div').map(getText)])
@@ -33,10 +34,12 @@ describe('Slots', () => {
 	it('enters day,beg,end into list', async () => {
 		const App = () => (<Slots stslots={useState([])}/>)
 		render(<App/>)
-		await type('inputDay', '1')
-		await type('inputBeg', '6')
-		await type('inputEnd', '8')
 		click('buttonAdd')
+		click('buttonEdit1')
+		await input('inputDay', '1')
+		await input('inputBeg', '6')
+		await input('inputEnd', '8')
+		click('buttonSave')
 		expect(getSlotList()).toEqual([['1', '6', '8']])
 	})
 
@@ -45,10 +48,12 @@ describe('Slots', () => {
 		render(<App/>)
 		expect(getSlotList()).toEqual([['1', '6', '8']])
 		Random.uuid()
-		await type('inputDay', '2')
-		await type('inputBeg', '14')
-		await type('inputEnd', '17')
 		click('buttonAdd')
+		click('buttonEdit2')
+		await input('inputDay', '2')
+		await input('inputBeg', '14')
+		await input('inputEnd', '17')
+		click('buttonSave')
 		expect(getSlotList()).toEqual([['1', '6', '8'], ['2', '14', '17']])
 	})
 
@@ -90,6 +95,12 @@ describe('Carts', () => {
 		click('inputSlots1')
 		click('buttonSave')
 		expect(getCartList()).toEqual([['cart1', ['1 6-8']]])
+	})
+
+	it('clears missing slot', async () => {
+		const App = () => (<Carts stslots={useState([])} stcarts={useState([cart1])} />)
+		render(<App/>)
+		expect(getCartList()).toEqual([['cart1', []]])
 	})
 
 	it('confirms & clears list', async () => {

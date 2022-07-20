@@ -6,9 +6,12 @@ import { getItemById, replaceItemById, dropItemById } from '@dwidge/lib/array'
 
 const Carts = ({ stslots, stcarts }) => {
 	const [allslots] = stslots
-	const [carts, setcarts] = stcarts
+	const [rawcarts, setcarts] = stcarts
 	const [idEdit, setidEdit] = useState()
 	const [confirm, setconfirm] = useState(false)
+
+	const dropMissingSlots = cart => ({ ...cart, slots: cart.slots.filter(id => getItemById(allslots, id)) })
+	const carts = rawcarts.map(dropMissingSlots)
 
 	const setcart = cart => setcarts(replaceItemById(carts, cart))
 	const delcart = id =>

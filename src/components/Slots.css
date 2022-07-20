@@ -1,0 +1,28 @@
+slot-table {
+display: table;
+width: 100%;
+margin-top: 1em;
+}
+slot-header, slot-item {
+display: table-row;
+}
+slot-header {
+background: orange;
+}
+slot-header > *, slot-item > * {
+display: table-cell;
+vertical-align: middle;
+}
+slot-header > *, slot-item > * {
+padding: 0.5em;
+}
+slot-item > * > input {
+width: 80%;
+}
+slot-buttons {
+width: 20%;
+padding: 0;
+}
+slot-buttons > button {
+width: 100%;
+}
