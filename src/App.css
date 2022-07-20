@@ -1,3 +1,7 @@
+* {
+box-sizing: border-box;
+}
+
 nav {
 display: flex;
 justify-content: space-between;
@@ -17,9 +21,8 @@ background: orange;
 
 button {
 padding: 1em;
-margin: 0.5em;
-background: darkorange;
-border: none;
+margin: 0em;
+border: solid 1px orange;
 }
 
 textarea {
@@ -34,4 +37,34 @@ display: block;
 slot-item {
 display: flex;
 justify-content: space-between;
+}
+
+cart-table {
+display: table;
+width: 100%;
+margin-top: 1em;
+}
+cart-header, cart-item {
+display: table-row;
+}
+cart-header {
+background: orange;
+}
+cart-header > *, cart-item > * {
+display: table-cell;
+vertical-align: middle;
+width: 40%;
+}
+cart-header > *, cart-item > * {
+padding: 0.5em;
+}
+cart-name > input {
+width: 80%;
+}
+cart-buttons {
+width: 20%;
+padding: 0;
+}
+cart-buttons > button {
+width: 100%;
 }

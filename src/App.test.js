@@ -17,7 +17,7 @@ const getSlotList = () =>
 	getTags(screen.getByTestId('slotList'))('slot-item').map(slotItem => ['slot-day', 'slot-beg', 'slot-end'].map(getTag(slotItem)).map(getText))
 
 const getCartList = () =>
-	getTags(screen.getByTestId('cartTable'))('cart-item').map(item => [getText(getTag(item)('cart-name')), getTags(getTag(item)('cart-slots'))('input').filter(el => el.value === 'true').map(item => item.id)])
+	getTags(screen.getByTestId('cartTable'))('cart-item').map(item => [getText(getTag(item)('cart-name')), getTags(getTag(item)('cart-slots'))('div').map(getText)])
 
 beforeEach(async () => {
 	serialSpy(Random, 'uuid', [1, 2, 3])
@@ -89,17 +89,17 @@ describe('Carts', () => {
 		await type('inputName', '1')
 		click('inputSlots1')
 		click('buttonSave')
-		expect(getCartList()).toEqual([['cart1', ['1']]])
+		expect(getCartList()).toEqual([['cart1', ['1 6-8']]])
 	})
 
 	it('confirms & clears list', async () => {
 		const App = () => (<Carts stslots={useState([slot1])} stcarts={useState([cart1, cart2])} />)
 		render(<App/>)
-		expect(getCartList()).toEqual([['cart1', ['1']], ['cart2', []]])
+		expect(getCartList()).toEqual([['cart1', ['1 6-8']], ['cart2', []]])
 		expect(text('buttonClear')).toEqual('Clear')
 		click('buttonClear')
 		expect(text('buttonClear')).toEqual('Confirm')
-		expect(getCartList()).toEqual([['cart1', ['1']], ['cart2', []]])
+		expect(getCartList()).toEqual([['cart1', ['1 6-8']], ['cart2', []]])
 		click('buttonClear')
 		expect(text('buttonClear')).toEqual('Clear')
 		expect(getCartList()).toEqual([])

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { uuid } from '@dwidge/lib/random'
 import { onChange, onChangeChecks } from '@dwidge/lib-react/helpers'
-import { replaceItemById, dropItemById } from '@dwidge/lib/array'
+import { getItemById, replaceItemById, dropItemById } from '@dwidge/lib/array'
 
 const Carts = ({ stslots, stcarts }) => {
 	const [allslots] = stslots
@@ -22,17 +22,17 @@ const Carts = ({ stslots, stcarts }) => {
 	}
 
 	return (
-		<div>
-			<cart-header>
-				<cart-name>name</cart-name>
-				<cart-slots>slots</cart-slots>
-			</cart-header>
+		<div-page>
 			<cart-table data-testid="cartTable">
+				<cart-header>
+					<cart-name>Name</cart-name>
+					<cart-slots>Slots</cart-slots>
+				</cart-header>
 				{carts.map(cart => idEdit === cart.id ? (<CartEdit key={cart.id} allslots={allslots} cart={cart} onSave={cart => { setcart(cart); setidEdit() }} onCancel={setidEdit} />) : (<CartRow key={cart.id} allslots={allslots} cart={cart} onEdit={setidEdit} onDel={delcart} />))}
 			</cart-table>
 			<button onClick={() => addcart(newcart())} data-testid="buttonAdd">Add</button>
 			<button onClick={onClear} data-testid="buttonClear">{confirm ? 'Confirm' : 'Clear'}</button>
-		</div>
+		</div-page>
 	)
 }
 
@@ -47,11 +47,13 @@ const CartRow = ({ allslots, cart, onEdit, onDel }) => {
 	return (
 		<cart-item>
 			<cart-name>{name}</cart-name>
-			<cart-slots>{allslots.map(({ id }) =>
-				(<input key={id} id={id} type="checkbox" value={slots.includes(id)} />),
+			<cart-slots>{slots.map(id => getItemById(allslots, id)).map(({ id, day, beg, end }) =>
+				(<div key={id}>{day} {beg}-{end}</div>),
 			)}</cart-slots>
-			<button onClick={() => onEdit(id)} data-testid={'buttonEdit' + id}>Edit</button>
-			<button onClick={() => onDel(id)} data-testid={'buttonDel' + id}>Del</button>
+			<cart-buttons>
+				<button onClick={() => onEdit(id)} data-testid={'buttonEdit' + id}>Edit</button>
+				<button onClick={() => onDel(id)} data-testid={'buttonDel' + id}>Del</button>
+			</cart-buttons>
 		</cart-item>
 	)
 }
@@ -66,16 +68,18 @@ CartRow.propTypes = {
 const CartEdit = ({ allslots, cart, onSave, onCancel }) => {
 	const { id } = cart
 	const [name, setname] = useState(cart.name)
-	const [slots, setslots] = useState([])
+	const [slots, setslots] = useState(cart.slots)
 
 	return (
 		<cart-item>
 			<cart-name><input data-testid="inputName" value={name} onChange={onChange(setname)} /></cart-name>
-			<cart-slots>{allslots.map(({ id }) =>
-				(<input key={id} data-testid={'inputSlots' + id} type="checkbox" value={slots.includes(id)} onChange={onChangeChecks(id, slots, setslots)} />),
+			<cart-slots>{allslots.map(({ id, day, beg, end }) =>
+				(<div key={id}><input data-testid={'inputSlots' + id} type="checkbox" checked={slots.includes(id)} onChange={onChangeChecks(id, slots, setslots)} /> {day} {beg}-{end}</div>),
 			)}</cart-slots>
-			<button onClick={() => onSave({ id, name, slots })} data-testid="buttonSave">Save</button>
-			<button onClick={onCancel} data-testid="buttonCancel">Cancel</button>
+			<cart-buttons>
+				<button onClick={() => onSave({ id, name, slots })} data-testid="buttonSave">Save</button>
+				<button onClick={onCancel} data-testid="buttonCancel">Cancel</button>
+			</cart-buttons>
 		</cart-item>
 	)
 }
