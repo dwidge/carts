@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
-	BrowserRouter as Router,
 	Routes,
 	Route,
 	NavLink,
 } from 'react-router-dom'
-import { useStorage } from '@dwidge/lib-react/storage'
+import { Storage } from '@dwidge/lib-react'
 
 import Slots from './components/Slots'
 import Carts from './components/Carts'
 import Pubs from './components/Pubs'
 import Schedule from './components/Schedule'
 import './App.css'
+const { useStorage } = Storage(useState, useEffect)
 
 const App = () => {
 	const stslots = useStorage('carts_slots', [])
@@ -19,7 +19,7 @@ const App = () => {
 	const stpubs = useStorage('carts_pubs', [])
 
 	return (
-		<Router basename="/carts">
+		<>
 			<nav>
 				<NavLink className={({ isActive }) => isActive ? 'link-active' : 'link'} to='/slots'>Slots</NavLink>
 				<NavLink className={({ isActive }) => isActive ? 'link-active' : 'link'} to='/carts'>Carts</NavLink>
@@ -28,13 +28,14 @@ const App = () => {
 			</nav>
 			<div>
 				<Routes>
+					<Route path='/' />
 					<Route path='/slots' element={<Slots stslots={stslots} />}/>
 					<Route path='/carts' element={<Carts stslots={stslots} stcarts={stcarts} />}/>
-					<Route path='/pubs' element={<Pubs stslots={stslots} stcarts={stcarts} stpubs={stpubs} />} />
+					<Route path='/pubs' element={<Pubs slots={stslots[0]} carts={stcarts[0]} stpubs={stpubs} />} />
 					<Route path='/schedule' element={<Schedule stslots={stslots} stcarts={stcarts} stpubs={stpubs} />}/>
 				</Routes>
 			</div>
-		</Router>
+		</>
 	)
 }
 

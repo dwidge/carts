@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { uuid } from '@dwidge/lib/random'
-import { onChange } from '@dwidge/lib-react/helpers'
-import { replaceItemById, dropItemById } from '@dwidge/lib/array'
+import { uuid, replaceItemById, dropItemById } from '@dwidge/lib'
+import { onChange } from '@dwidge/lib-react'
 import './Slots.css'
 
 const Slots = ({ stslots }) => {

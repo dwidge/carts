@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { uuid } from '@dwidge/lib/random'
-import { onChange, onChangeChecks } from '@dwidge/lib-react/helpers'
-import { getItemById, replaceItemById, dropItemById } from '@dwidge/lib/array'
+import { uuid, getItemById, replaceItemById, dropItemById } from '@dwidge/lib'
+import { onChange, onChangeChecks } from '@dwidge/lib-react'
 
 const Carts = ({ stslots, stcarts }) => {
 	const [allslots] = stslots
