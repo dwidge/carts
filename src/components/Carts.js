@@ -34,6 +34,11 @@ const Carts = ({ stslots, stcarts }) => {
 			</cart-table>
 			<button onClick={() => addcart(newcart())} data-testid="buttonAdd">Add</button>
 			<button onClick={onClear} data-testid="buttonClear">{confirm ? 'Confirm' : 'Clear'}</button>
+			<p>Name is any text or address to help you identify the cart.</p>
+			<p>Slots are the allowed time slots for the cart which you pick from the Slots page.</p>
+			<p>Examples</p>
+			<p>Name: Cart A, Slots: 1 6-8, 7 14-16</p>
+			<p>Name: Waterfall Rd, Slots: Wed 6.75-8.25</p>
 		</div-page>
 	)
 }

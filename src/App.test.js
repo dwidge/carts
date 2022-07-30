@@ -152,7 +152,7 @@ describe('App', () => {
 				<App />
 			</MemoryRouter>)
 
-			expect(screen.getByText(/Add/i)).toBeInTheDocument()
+			expect(screen.getByTestId('buttonAdd')).toBeInTheDocument()
 			expect(screen.getByText(/Clear/i)).toBeInTheDocument()
 		})
 	})
@@ -162,7 +162,7 @@ describe('App', () => {
 				<App />
 			</MemoryRouter>)
 
-			expect(screen.getByText(/Add/i)).toBeInTheDocument()
+			expect(screen.getByTestId('buttonAdd')).toBeInTheDocument()
 			expect(screen.getByText(/Clear/i)).toBeInTheDocument()
 		})
 	})
@@ -172,7 +172,7 @@ describe('App', () => {
 				<App />
 			</MemoryRouter>)
 
-			expect(screen.getByText(/Add/i)).toBeInTheDocument()
+			expect(screen.getByTestId('buttonAdd')).toBeInTheDocument()
 			expect(screen.getByText(/Clear/i)).toBeInTheDocument()
 		})
 	})

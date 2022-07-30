@@ -64,6 +64,7 @@ const Schedule = ({ slots, carts, pubs }) => {
 					</cart-item>
 				))}
 			</cart-table>
+			<p>Each time slot of each cart is assigned a person. Starting from the earliest time slot, the person with the least slots so far is chosen.</p>
 		</div-page>
 	)
 }
