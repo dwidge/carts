@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Schedule renders columns 1`] = `
+<cart-table
+  data-testid="tableSchedule"
+>
+  <cart-header>
+    <cart-name>
+      Cart
+    </cart-name>
+    <cart-slots>
+      Slot
+    </cart-slots>
+    <cart-pub>
+      Pub
+    </cart-pub>
+  </cart-header>
+</cart-table>
+`;
+
+exports[`App Schedule renders columns 2`] = `
+<cart-table
+  data-testid="tableStats"
+>
+  <cart-header>
+    <cart-name>
+      Pub
+    </cart-name>
+    <cart-name>
+      Slots
+    </cart-name>
+    <cart-name>
+      Hours
+    </cart-name>
+  </cart-header>
+</cart-table>
+`;
+
+exports[`Schedule shows schedule 1`] = `
+<cart-table
+  data-testid="tableSchedule"
+>
+  <cart-header>
+    <cart-name>
+      Cart
+    </cart-name>
+    <cart-slots>
+      Slot
+    </cart-slots>
+    <cart-pub>
+      Pub
+    </cart-pub>
+  </cart-header>
+  <cart-item>
+    <cart-name>
+      cart1
+    </cart-name>
+    <cart-slots>
+      1 6-8
+    </cart-slots>
+    <cart-pub>
+      pub1
+    </cart-pub>
+  </cart-item>
+</cart-table>
+`;
+
+exports[`Schedule shows schedule 2`] = `
+<cart-table
+  data-testid="tableStats"
+>
+  <cart-header>
+    <cart-name>
+      Pub
+    </cart-name>
+    <cart-name>
+      Slots
+    </cart-name>
+    <cart-name>
+      Hours
+    </cart-name>
+  </cart-header>
+  <cart-item>
+    <cart-name>
+      pub1
+    </cart-name>
+    <cart-name>
+      1
+    </cart-name>
+    <cart-name>
+      2
+    </cart-name>
+  </cart-item>
+  <cart-item>
+    <cart-name>
+      pub2
+    </cart-name>
+    <cart-name>
+      0
+    </cart-name>
+    <cart-name>
+      0
+    </cart-name>
+  </cart-item>
+</cart-table>
+`;

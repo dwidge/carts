@@ -32,7 +32,7 @@ const App = () => {
 					<Route path='/slots' element={<Slots stslots={stslots} />}/>
 					<Route path='/carts' element={<Carts stslots={stslots} stcarts={stcarts} />}/>
 					<Route path='/pubs' element={<Pubs slots={stslots[0]} carts={stcarts[0]} stpubs={stpubs} />} />
-					<Route path='/schedule' element={<Schedule stslots={stslots} stcarts={stcarts} stpubs={stpubs} />}/>
+					<Route path='/schedule' element={<Schedule slots={stslots[0]} carts={stcarts[0]} pubs={stpubs[0]} />}/>
 				</Routes>
 			</div>
 		</>

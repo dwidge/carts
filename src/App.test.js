@@ -8,6 +8,7 @@ import * as Lib from '@dwidge/lib'
 
 import Slots from './components/Slots'
 import Carts from './components/Carts'
+import Schedule from './components/Schedule'
 
 import {
 	MemoryRouter,
@@ -129,21 +130,60 @@ describe('Carts', () => {
 	})
 })
 
-test('renders buttons', () => {
-	render(<MemoryRouter initialEntries={['/carts']}>
-		<App />
-	</MemoryRouter>)
+describe('Schedule', () => {
+	const slot1 = { id: 1, day: 1, beg: 6, end: 8 }
+	const cart1 = { id: 1, name: 'cart1', slots: [1] }
+	const cart2 = { id: 2, name: 'cart2', slots: [] }
+	const pub1 = { id: 1, name: 'pub1', slots: [1], carts: [1] }
+	const pub2 = { id: 1, name: 'pub2', slots: [1], carts: [2] }
 
-	expect(screen.getByText(/Add/i)).toBeInTheDocument()
-	expect(screen.getByText(/Clear/i)).toBeInTheDocument()
+	it('shows schedule', async () => {
+		const App = () => (<Schedule slots={([slot1])} carts={([cart1, cart2])} pubs={([pub1, pub2])} />)
+		render(<App/>)
+		expect(screen.getByTestId('tableSchedule')).toMatchSnapshot()
+		expect(screen.getByTestId('tableStats')).toMatchSnapshot()
+	})
 })
-describe('pubs', () => {
-	test('renders buttons', () => {
-		render(<MemoryRouter initialEntries={['/pubs']}>
-			<App />
-		</MemoryRouter>)
 
-		expect(screen.getByText(/Add/i)).toBeInTheDocument()
-		expect(screen.getByText(/Clear/i)).toBeInTheDocument()
+describe('App', () => {
+	describe('Slots', () => {
+		test('renders buttons', () => {
+			render(<MemoryRouter initialEntries={['/slots']}>
+				<App />
+			</MemoryRouter>)
+
+			expect(screen.getByText(/Add/i)).toBeInTheDocument()
+			expect(screen.getByText(/Clear/i)).toBeInTheDocument()
+		})
+	})
+	describe('Carts', () => {
+		test('renders buttons', () => {
+			render(<MemoryRouter initialEntries={['/carts']}>
+				<App />
+			</MemoryRouter>)
+
+			expect(screen.getByText(/Add/i)).toBeInTheDocument()
+			expect(screen.getByText(/Clear/i)).toBeInTheDocument()
+		})
+	})
+	describe('Pubs', () => {
+		test('renders buttons', () => {
+			render(<MemoryRouter initialEntries={['/pubs']}>
+				<App />
+			</MemoryRouter>)
+
+			expect(screen.getByText(/Add/i)).toBeInTheDocument()
+			expect(screen.getByText(/Clear/i)).toBeInTheDocument()
+		})
+	})
+	describe('Schedule', () => {
+		test('renders columns', () => {
+			render(<MemoryRouter initialEntries={['/schedule']}>
+				<App />
+			</MemoryRouter>)
+
+			expect(screen.getByTestId('tableSchedule')).toMatchSnapshot()
+			expect(screen.getByTestId('tableStats')).toMatchSnapshot()
+		})
 	})
 })
