@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "Apache-2.0",
   "private": true,
-  "homepage": "/carts",
+  "homepage": "/carts-react",
   "dependencies": {
     "@dwidge/lib": "github:dwidge/lib",
     "@dwidge/lib-react": "github:dwidge/lib-react",
@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "build": "react-scripts build",
+    "build": "BUILD_PATH='./docs' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "esw src/**/*.{js,jsx,ts,tsx,json} --changed -w --fix"
