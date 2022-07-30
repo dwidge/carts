@@ -31,7 +31,7 @@
 	},
 	"scripts": {
 		"start": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts start",
-		"build": "cross-env BUILD_PATH='./docs' react-scripts build",
+		"build": "cross-env BUILD_PATH='./docs' GENERATE_SOURCEMAP=false react-scripts build",
 		"test": "react-scripts test --env=jsdom --coverage",
 		"eject": "react-scripts eject",
 		"lint": "eslint . --ext .js,.json,.*rc"

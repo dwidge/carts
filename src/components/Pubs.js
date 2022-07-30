@@ -20,7 +20,7 @@ const Pubs = ({ slots, carts, stpubs }) =>
 		<p>Carts are the preferred places for the person which you pick from the Carts page.</p>
 		<p>Examples</p>
 		<p>Name: Person A, Slots: 1 6-8, 7 14-16, Carts: Cart A, Cart C</p>
-		<p>Name: John, Slots: Sunday2 14-16, Carts: Waterfall Rd</p>
+		<p>Name: John, Slots: 3 14-16, Carts: Waterfall Rd</p>
 	</>)
 
 Pubs.propTypes = {

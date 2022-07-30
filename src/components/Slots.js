@@ -32,14 +32,12 @@ const Slots = ({ stslots }) => {
 			</slot-table>
 			<button onClick={() => addslot(newslot())} data-testid="buttonAdd">Add</button>
 			<button onClick={onClear} data-testid="buttonClear">{confirm ? 'Confirm' : 'Clear'}</button>
-			<p>Day is the name or number of the day in the week or beyond if the schedule covers multiple weeks. 1=Mon,7=Sun,8=2nd Mon</p>
+			<p>Day is the number of the day in the week or beyond if the schedule covers multiple weeks. 1=Mon,7=Sun,8=2nd Mon</p>
 			<p>Beg, End is the start and end hours in a 24 hour day. Use .5 for half past.</p>
 			<p>Examples</p>
 			<p>Day: 1, Beg: 6, End: 8</p>
 			<p>Day: 7, Beg: 14, End: 16</p>
-			<p>Day: 8, Beg: 14, End: 15.5</p>
-			<p>Day: Tues, Beg: 15, End: 18</p>
-			<p>Day: 2nd Tues, Beg: 15, End: 16</p>
+			<p>Day: 8, Beg: 12.5, End: 14.5</p>
 		</div-page>
 	)
 }

@@ -38,7 +38,7 @@ const Carts = ({ stslots, stcarts }) => {
 			<p>Slots are the allowed time slots for the cart which you pick from the Slots page.</p>
 			<p>Examples</p>
 			<p>Name: Cart A, Slots: 1 6-8, 7 14-16</p>
-			<p>Name: Waterfall Rd, Slots: Wed 6.75-8.25</p>
+			<p>Name: Waterfall Rd, Slots: 3 6.75-8.25</p>
 		</div-page>
 	)
 }
