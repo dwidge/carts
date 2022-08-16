@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { uuid, replaceItemById, dropItemById } from '@dwidge/lib'
+import { uuid, replaceItemById, dropItemById, calcCsvFromObjects, calcObjectsFromCsv } from '@dwidge/lib'
 import { onChange } from '@dwidge/lib-react'
+import { ImportFile, ExportFile } from '@dwidge/table-react'
+
 import './Slots.css'
 
 const Slots = ({ stslots }) => {
@@ -32,6 +34,13 @@ const Slots = ({ stslots }) => {
 			</slot-table>
 			<button onClick={() => addslot(newslot())} data-testid="buttonAdd">Add</button>
 			<button onClick={onClear} data-testid="buttonClear">{confirm ? 'Confirm' : 'Clear'}</button>
+			<ImportFile ext='.csv' onAccept={text => {
+				const a = calcObjectsFromCsv(text).map(({ id, day, beg, end }) => ({
+					id, day, beg, end,
+				}))
+				setslots(slots.concat(a))
+			}}/>
+			<ExportFile ext='.csv' name='slots.csv' content={calcCsvFromObjects(slots)}/>
 			<p>Day is the number of the day in the week or beyond if the schedule covers multiple weeks. 1=Mon,7=Sun,8=2nd Mon</p>
 			<p>Beg, End is the start and end hours in a 24 hour day. Use .5 for half past.</p>
 			<p>Examples</p>

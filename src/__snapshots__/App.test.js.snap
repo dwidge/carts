@@ -1,5 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`App Data renders page 1`] = `
+<div-page
+  data-testid="pageData"
+>
+  <p>
+    Slots: 
+    0
+  </p>
+  <p>
+    Carts: 
+    0
+  </p>
+  <p>
+    Pubs: 
+    0
+  </p>
+  <button>
+    Clear All
+  </button>
+  <div>
+    <div>
+      <button
+        data-testid="buttonImport.json"
+      >
+        Import 
+        .json
+      </button>
+    </div>
+    <button>
+      Export .json
+    </button>
+    <button>
+      Export .csv
+    </button>
+  </div>
+  <p>
+    Import/export .json to backup or transfer between devices. Export .csv to use with a spreadsheet program.
+  </p>
+</div-page>
+`;
+
 exports[`App Schedule renders columns 1`] = `
 <cart-table
   data-testid="tableSchedule"

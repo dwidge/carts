@@ -10,6 +10,7 @@ import Slots from './components/Slots'
 import Carts from './components/Carts'
 import Pubs from './components/Pubs'
 import Schedule from './components/Schedule'
+import Data from './components/Data'
 import './App.css'
 const { useStorage } = Storage(useState, useEffect)
 
@@ -25,6 +26,7 @@ const App = () => {
 				<NavLink className={({ isActive }) => isActive ? 'link-active' : 'link'} to='/carts'>Carts</NavLink>
 				<NavLink className={({ isActive }) => isActive ? 'link-active' : 'link'} to='/pubs'>Pubs</NavLink>
 				<NavLink className={({ isActive }) => isActive ? 'link-active' : 'link'} to='/schedule'>Schedule</NavLink>
+				<NavLink className={({ isActive }) => isActive ? 'link-active' : 'link'} to='/data'>Data</NavLink>
 			</nav>
 			<div>
 				<Routes>
@@ -33,6 +35,7 @@ const App = () => {
 					<Route path='/carts' element={<Carts stslots={stslots} stcarts={stcarts} />}/>
 					<Route path='/pubs' element={<Pubs slots={stslots[0]} carts={stcarts[0]} stpubs={stpubs} />} />
 					<Route path='/schedule' element={<Schedule slots={stslots[0]} carts={stcarts[0]} pubs={stpubs[0]} />}/>
+					<Route path='/data' element={<Data {...{ stslots, stcarts, stpubs }} />}/>
 				</Routes>
 			</div>
 		</>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { uuid, getItemById, replaceItemById, dropItemById } from '@dwidge/lib'
+import { uuid, getItemById, replaceItemById, dropItemById, calcCsvFromObjects, calcObjectsFromCsv } from '@dwidge/lib'
 import { onChange, onChangeChecks } from '@dwidge/lib-react'
+import { ImportFile, ExportFile } from '@dwidge/table-react'
 
 const Carts = ({ stslots, stcarts }) => {
 	const [allslots] = stslots
@@ -23,6 +24,13 @@ const Carts = ({ stslots, stcarts }) => {
 		setconfirm(!confirm)
 	}
 
+	const viewcarts = carts.map(({ id, name, slots }) => ({
+		id,
+		name,
+		slots: slots.map(id => getItemById(allslots, id)).map(({ day, beg, end }) => `${day} ${beg}-${end}`),
+		slotsId: slots,
+	}))
+
 	return (
 		<div-page>
 			<cart-table data-testid="cartTable">
@@ -34,6 +42,13 @@ const Carts = ({ stslots, stcarts }) => {
 			</cart-table>
 			<button onClick={() => addcart(newcart())} data-testid="buttonAdd">Add</button>
 			<button onClick={onClear} data-testid="buttonClear">{confirm ? 'Confirm' : 'Clear'}</button>
+			<ImportFile ext='.csv' onAccept={text => {
+				const a = calcObjectsFromCsv(text).map(({ id, name, slotsId }) => ({
+					id, name, slots: (slotsId.map) ? slotsId : [slotsId],
+				}))
+				setcarts(carts.concat(a))
+			}}/>
+			<ExportFile ext='.csv' name='carts.csv' content={calcCsvFromObjects(viewcarts)}/>
 			<p>Name is any text or address to help you identify the cart.</p>
 			<p>Slots are the allowed time slots for the cart which you pick from the Slots page.</p>
 			<p>Examples</p>

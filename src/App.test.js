@@ -186,4 +186,13 @@ describe('App', () => {
 			expect(screen.getByTestId('tableStats')).toMatchSnapshot()
 		})
 	})
+	describe('Data', () => {
+		test('renders page', () => {
+			render(<MemoryRouter initialEntries={['/data']}>
+				<App />
+			</MemoryRouter>)
+
+			expect(screen.getByTestId('pageData')).toMatchSnapshot()
+		})
+	})
 })

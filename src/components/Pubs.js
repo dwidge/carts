@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, ColumnText, ColumnSet } from '@dwidge/table-react'
+import { Table, ColumnText, ColumnSet, ImportFile } from '@dwidge/table-react'
+import { uuid, calcObjectsFromCsv } from '@dwidge/lib'
 
 const slottoString = o =>
 	o.day + ' ' + o.beg + '-' + o.end
@@ -14,7 +15,18 @@ const Pubs = ({ slots, carts, stpubs }) =>
 			name: ColumnText('Name'),
 			slots: ColumnSet('Slots', slots, slottoString),
 			carts: ColumnSet('Carts', carts, carttoString),
-		}} defaults={{ name: 'pub', slots: [], carts: [] }} rows={stpubs} />
+		}} newRow={() => ({ id: uuid(), name: 'pub', slots: [], carts: [] })} rows={stpubs} enable={{ importCSV: false, exportCSV: true }} />
+		<ImportFile ext='.csv' onAccept={text => {
+			const [pubs, setpubs] = stpubs
+			const a = calcObjectsFromCsv(text)
+				.map(({ id, name, slots, carts }) => ({
+					id,
+					name,
+					slots: (slots.map) ? slots : [slots],
+					carts: (carts.map) ? carts : [carts],
+				}))
+			setpubs(pubs.concat(a))
+		}}/>
 		<p>Name is any text or address to help you identify the person.</p>
 		<p>Slots are the preferred time slots for the person which you pick from the Slots page.</p>
 		<p>Carts are the preferred places for the person which you pick from the Carts page.</p>
